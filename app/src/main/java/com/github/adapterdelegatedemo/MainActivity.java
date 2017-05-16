@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
         recyclerView.setAdapter(mAdapter);
 
         //设置数据
-        mAdapter.refreshOrLoadMoreItems(page, getItems("Item", 15));
+        mAdapter.refreshOrLoadMoreDiffItems(page, getItems("Item", 15));
     }
 
     /**

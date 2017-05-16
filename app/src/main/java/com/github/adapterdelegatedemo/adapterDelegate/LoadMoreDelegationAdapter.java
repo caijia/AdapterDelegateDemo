@@ -16,37 +16,50 @@ import java.util.List;
 
 public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
 
+    private static final int MIN_PAGE = 1;
     private List<Object> totalList;
     private boolean loadMore;
     private LoadMoreDelegate.LoadMoreItem loadMoreItem;
     private AdapterDelegateDiffCallback diffCallback;
+    private int minPage = MIN_PAGE;
 
     public LoadMoreDelegationAdapter(boolean loadMore,
-                                     @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener listener) {
-        init(loadMore, listener);
+                                     @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener l) {
+        this(loadMore, MIN_PAGE, l);
+    }
+
+    public LoadMoreDelegationAdapter(boolean loadMore, int minPage,
+                                     @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener l) {
+        init(loadMore, minPage < 0 ? MIN_PAGE : minPage, l);
     }
 
     public LoadMoreDelegationAdapter(boolean loadMore,
-                                     @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener listener,
+                                     @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener l,
+                                     @NonNull ItemViewDelegateManager delegateManager) {
+        this(loadMore, MIN_PAGE, l, delegateManager);
+    }
+
+    public LoadMoreDelegationAdapter(boolean loadMore, int minPage,
+                                     @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener l,
                                      @NonNull ItemViewDelegateManager delegateManager) {
         super(delegateManager);
-        init(loadMore, listener);
+        init(loadMore, minPage < 0 ? MIN_PAGE : minPage, l);
     }
 
-    private void init(boolean loadMore, LoadMoreDelegate.OnLoadMoreDelegateListener listener) {
+    private void init(boolean loadMore, int minPage, LoadMoreDelegate.OnLoadMoreDelegateListener l) {
+        this.minPage = minPage;
         diffCallback = new AdapterDelegateDiffCallback();
         this.loadMore = loadMore;
         loadMoreItem = new LoadMoreDelegate.LoadMoreItem();
         totalList = new ArrayList<>();
         setDataSource(totalList);
-        delegateManager.addDelegate(new LoadMoreDelegate(listener));
+        delegateManager.addDelegate(new LoadMoreDelegate(l));
     }
 
-    private void addLoadMoreItemNotify() {
+    private void addLoadMoreItem() {
         if (loadMore) {
             totalList.add(loadMoreItem);
         }
-        notifyDataSetChanged();
     }
 
     public void setLoadMore(boolean loadMore) {
@@ -54,11 +67,11 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
     }
 
     public void refreshOrLoadMoreItems(int page, @NonNull List<?> items) {
-        if (page < 1) {
+        if (page < minPage) {
             return;
         }
 
-        if (page == 1) {
+        if (page == minPage) {
             updateItems(items);
 
         } else {
@@ -67,11 +80,11 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
     }
 
     public void refreshOrLoadMoreDiffItems(int page, @NonNull List<?> items) {
-        if (page < 1) {
+        if (page < minPage) {
             return;
         }
 
-        if (page == 1) {
+        if (page == minPage) {
             updateDiffItems(items);
 
         } else {
@@ -130,18 +143,21 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
     public void updateItems(@NonNull List<?> items) {
         totalList.clear();
         totalList.addAll(items);
-        addLoadMoreItemNotify();
+        addLoadMoreItem();
+        notifyDataSetChanged();
     }
 
     public void appendItems(@NonNull List<?> items) {
         totalList.remove(loadMoreItem);
         totalList.addAll(items);
-        addLoadMoreItemNotify();
+        addLoadMoreItem();
+        notifyDataSetChanged();
     }
 
     public void appendItem(@NonNull Object item) {
         totalList.remove(loadMoreItem);
         totalList.add(item);
-        addLoadMoreItemNotify();
+        addLoadMoreItem();
+        notifyDataSetChanged();
     }
 }

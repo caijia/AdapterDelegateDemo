@@ -27,7 +27,6 @@ public class TextViewDelegate extends ItemViewDelegate<TextObj,TextViewDelegate.
     public void onBindViewHolder(List<?> dataSource, TextObj textObj,
                                  RecyclerView.Adapter adapter, TextVH holder, int position) {
         holder.textView.setText(textObj.getText());
-        System.out.println("position=" + position);
     }
 
     @Override
