@@ -1,6 +1,7 @@
 package com.github.adapterdelegatedemo;
 
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,6 +33,11 @@ public class TextViewDelegate extends ItemViewDelegate<TextObj,TextViewDelegate.
     @Override
     public boolean isForViewType(@NonNull Object obj) {
         return obj instanceof TextObj;
+    }
+
+    @Override
+    public int getSpanCount(GridLayoutManager layoutManager) {
+        return 2;
     }
 
     static class TextVH extends RecyclerView.ViewHolder{

@@ -86,7 +86,7 @@ public class AbsDelegationAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        delegateManager.onAttachedToRecyclerView(recyclerView);
+        delegateManager.onAttachedToRecyclerView(recyclerView,dataSource);
     }
 
     @Override

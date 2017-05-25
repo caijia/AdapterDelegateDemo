@@ -134,7 +134,7 @@ public class ItemViewDelegateManager {
         }
     }
 
-    public void onAttachedToRecyclerView(final RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(final RecyclerView recyclerView, final List<?> dataSource) {
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++) {
             ItemViewDelegate delegate = delegates.valueAt(i);
@@ -150,9 +150,10 @@ public class ItemViewDelegateManager {
             gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                 @Override
                 public int getSpanSize(int position) {
-                    RecyclerView.ViewHolder holder = recyclerView.findViewHolderForAdapterPosition(position);
-                    if (holder != null) {
-                        ItemViewDelegate delegate = getDelegateForViewType(holder.getItemViewType());
+                    if (dataSource != null) {
+                        Object item = dataSource.get(position);
+                        int itemViewType = getItemViewType(item);
+                        ItemViewDelegate delegate = getDelegateForViewType(itemViewType);
                         if (delegate != null) {
                             return delegate.getSpanCount(gridLayoutManager);
                         }

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.github.adapterdelegatedemo.adapterDelegate.LoadMoreDelegationAdapter;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
         mAdapter.delegateManager.addDelegate(new TextViewDelegate());
 
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
         recyclerView.setAdapter(mAdapter);
 
         //设置数据
