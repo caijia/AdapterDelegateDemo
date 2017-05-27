@@ -135,11 +135,13 @@ public class ItemViewDelegateManager {
     }
 
     public void onAttachedToRecyclerView(final RecyclerView recyclerView, final List<?> dataSource) {
+
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++) {
             ItemViewDelegate delegate = delegates.valueAt(i);
+            int itemType = delegates.keyAt(i);
             if (delegate != null) {
-                delegate.onAttachedToRecyclerView(recyclerView);
+                delegate.onAttachedToRecyclerView(recyclerView,itemType);
             }
         }
 

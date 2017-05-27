@@ -90,7 +90,7 @@ public class LoadMoreDelegate
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public void onAttachedToRecyclerView(RecyclerView recyclerView,int itemType) {
         if (recyclerView != null) {
             LoadMoreHelper.newInstance().attachToRecyclerView(recyclerView, this);
         }

@@ -48,7 +48,7 @@ public class AbsDelegationAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     public Object getItem(int position) {
-        return dataSource == null ? null : dataSource.get(position);
+        return dataSource == null || dataSource.isEmpty() ? null : dataSource.get(position % dataSource.size());
     }
 
     public List<?> getDataSource() {

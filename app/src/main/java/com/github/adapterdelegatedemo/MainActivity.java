@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.github.adapterdelegatedemo.adapterDelegate.LoadMoreDelegationAdapter;
@@ -31,11 +31,16 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new LoadMoreDelegationAdapter(true, this);
+        mAdapter = new LoadMoreDelegationAdapter(false, null);
         mAdapter.delegateManager.addDelegate(new TextViewDelegate());
+        mAdapter.delegateManager.addDelegate(new ImageDelegate());
 
         recyclerView.setItemAnimator(null);
-        recyclerView.setLayoutManager(new GridLayoutManager(this,4));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        RecyclerView.RecycledViewPool pool = new RecyclerView.RecycledViewPool();
+        recyclerView.setRecycledViewPool(pool);
+
         recyclerView.setAdapter(mAdapter);
 
         //设置数据
@@ -62,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
                 } else {
                     loadMoreView.setStatus(LoadMoreFooterView.Status.GONE);
                 }
-                mAdapter.refreshOrLoadMoreDiffItems(page, getItems("loadMore Item " + page + "-", 10));
+                mAdapter.refreshOrLoadMoreDiffItems(page, getItems("loadMore Item " + page + "-", 15));
             }
         }, 2000);
     }
@@ -85,6 +90,9 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
         List<Object> list = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             list.add(new TextObj(s + (i + 1)));
+        }
+        for (int i = 0; i < 5; i++) {
+            list.add(new ImageObj(s + (i + 1)));
         }
         return list;
     }

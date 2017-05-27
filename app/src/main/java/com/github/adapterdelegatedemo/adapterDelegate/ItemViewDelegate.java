@@ -25,8 +25,8 @@ public abstract class ItemViewDelegate<Item,VH extends RecyclerView.ViewHolder> 
                                  VH holder, int position, List<Object> payloads) {
     }
 
-    public Item getItem(List<?> dataSource,RecyclerView.Adapter adapter, VH holder, int position) {
-        return (Item) dataSource.get(position);
+    public Item getItem(List<?> dataSource, RecyclerView.Adapter adapter, VH holder, int position) {
+        return dataSource == null || dataSource.isEmpty() ? null : (Item) dataSource.get(position % dataSource.size());
     }
 
     public abstract boolean isForViewType(@NonNull Object item);
@@ -44,7 +44,28 @@ public abstract class ItemViewDelegate<Item,VH extends RecyclerView.ViewHolder> 
     public void onViewDetachedFromWindow(VH holder) {
     }
 
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+    public int createCacheViewHolderCount() {
+        return 0;
+    }
+
+    public int maxRecycledViews() {
+        return 5;
+    }
+
+    public void onAttachedToRecyclerView(RecyclerView recyclerView, int itemType) {
+        RecyclerView.RecycledViewPool pool = recyclerView.getRecycledViewPool();
+        pool.setMaxRecycledViews(itemType,maxRecycledViews());
+
+        int cacheViewHolderCount = createCacheViewHolderCount();
+        if (cacheViewHolderCount != 0) {
+            if (itemType != -1) {
+                for (int i = 0; i < cacheViewHolderCount; i++) {
+                    RecyclerView.ViewHolder holder = recyclerView.getAdapter()
+                            .createViewHolder(recyclerView, itemType);
+                    pool.putRecycledView(holder);
+                }
+            }
+        }
     }
 
     public void onDetachedFromRecyclerView(RecyclerView recyclerView) {
