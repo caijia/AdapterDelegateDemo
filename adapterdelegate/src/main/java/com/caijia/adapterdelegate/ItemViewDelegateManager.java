@@ -1,4 +1,4 @@
-package com.github.adapterdelegatedemo.adapterDelegate;
+package com.caijia.adapterdelegate;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,8 +13,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- * 参考 https://github.com/sockeqwe/AdapterDelegates
- * https://github.com/Aspsine/IRecyclerView
  * Created by cai.jia on 2017/5/9 0009
  */
 
@@ -135,7 +133,6 @@ public class ItemViewDelegateManager {
     }
 
     public void onAttachedToRecyclerView(final RecyclerView recyclerView, final List<?> dataSource) {
-
         int delegatesCount = delegates.size();
         for (int i = 0; i < delegatesCount; i++) {
             ItemViewDelegate delegate = delegates.valueAt(i);

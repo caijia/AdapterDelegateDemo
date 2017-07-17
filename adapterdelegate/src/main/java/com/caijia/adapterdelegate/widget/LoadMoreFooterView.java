@@ -1,4 +1,4 @@
-package com.github.adapterdelegatedemo.adapterDelegate.widget;
+package com.caijia.adapterdelegate.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.github.adapterdelegatedemo.R;
+import com.caijia.adapterdelegate.R;
 
 /**
  * Created by cai.jia on 2016/6/7 0007.
@@ -36,7 +36,7 @@ public class LoadMoreFooterView extends FrameLayout {
 
     public LoadMoreFooterView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        LayoutInflater.from(context).inflate(R.layout.view_load_more_footer, this, true);
+        LayoutInflater.from(context).inflate(R.layout.view_delegate_load_more, this, true);
 
         mLoadingView = findViewById(R.id.loadingView);
         TextView loadingTextTv = (TextView) mLoadingView.findViewById(R.id.text);
@@ -46,10 +46,10 @@ public class LoadMoreFooterView extends FrameLayout {
         TypedArray a = null;
         try {
             a = context.obtainStyledAttributes(attrs, R.styleable.LoadMoreFooterView);
-            String loadingText = a.getString(R.styleable.LoadMoreFooterView_loading_text);
-            String errorText = a.getString(R.styleable.LoadMoreFooterView_error_text);
-            String endText = a.getString(R.styleable.LoadMoreFooterView_end_text);
-            int color = a.getResourceId(R.styleable.LoadMoreFooterView_lf_color,-1);
+            String loadingText = a.getString(R.styleable.LoadMoreFooterView_fv_loading_text);
+            String errorText = a.getString(R.styleable.LoadMoreFooterView_fv_error_text);
+            String endText = a.getString(R.styleable.LoadMoreFooterView_fv_end_text);
+            int color = a.getResourceId(R.styleable.LoadMoreFooterView_fv_lf_color,-1);
 
             if (!TextUtils.isEmpty(loadingText)) {
                 loadingTextTv.setText(loadingText);
@@ -101,6 +101,26 @@ public class LoadMoreFooterView extends FrameLayout {
         }
         this.mStatus = status;
         change();
+    }
+
+    public static void changeStatus(LoadMoreFooterView view,boolean hasNext, boolean isError) {
+        if (isError) {
+            if (view != null) {
+                view.setStatus(Status.ERROR);
+            }
+            return;
+        }
+
+        if (hasNext) {
+            if (view != null) {
+                view.setStatus(Status.GONE);
+            }
+
+        } else {
+            if (view != null) {
+                view.setStatus(Status.THE_END);
+            }
+        }
     }
 
     public boolean canLoadMore() {

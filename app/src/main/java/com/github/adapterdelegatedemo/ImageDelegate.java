@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.github.adapterdelegatedemo.adapterDelegate.ItemViewDelegate;
+import com.caijia.adapterdelegate.ItemViewDelegate;
 
 import java.util.List;
 

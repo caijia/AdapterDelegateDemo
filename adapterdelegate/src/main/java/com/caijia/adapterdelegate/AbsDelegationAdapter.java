@@ -1,4 +1,4 @@
-package com.github.adapterdelegatedemo.adapterDelegate;
+package com.caijia.adapterdelegate;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 /**
- *
- * 参考 https://github.com/sockeqwe/AdapterDelegates
- * https://github.com/Aspsine/IRecyclerView
  * Created by cai.jia on 2017/5/12 0012
  */
 

@@ -1,4 +1,4 @@
-package com.github.adapterdelegatedemo.adapterDelegate.helper;
+package com.caijia.adapterdelegate.helper;
 
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
@@ -15,7 +15,7 @@ public class LoadMoreHelper {
 
     private ScrollToBottomListener scrollToBottomListener;
 
-    public void attachToRecyclerView(RecyclerView recyclerView,OnLoadMoreListener loadMoreListener) {
+    public void attachToRecyclerView(RecyclerView recyclerView, OnLoadMoreListener loadMoreListener) {
         if (recyclerView == null) {
             return;
         }

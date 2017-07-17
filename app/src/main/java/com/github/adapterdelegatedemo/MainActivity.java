@@ -7,9 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.github.adapterdelegatedemo.adapterDelegate.LoadMoreDelegationAdapter;
-import com.github.adapterdelegatedemo.adapterDelegate.delegate.LoadMoreDelegate;
-import com.github.adapterdelegatedemo.adapterDelegate.widget.LoadMoreFooterView;
+import com.caijia.adapterdelegate.LoadMoreDelegationAdapter;
+import com.caijia.adapterdelegate.delegate.LoadMoreDelegate;
+import com.caijia.adapterdelegate.widget.LoadMoreFooterView;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,11 +1,12 @@
-package com.github.adapterdelegatedemo.adapterDelegate.delegate;
+package com.caijia.adapterdelegate.delegate;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.ViewGroup;
 
-import com.github.adapterdelegatedemo.adapterDelegate.ItemViewDelegate;
+import com.caijia.adapterdelegate.ItemViewDelegate;
+
 
 /**
  * 如果加入头和尾时,有必要继承这个类

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadMoreFooterView">
+        <attr name="fv_loading_text" format="string"/>
+        <attr name="fv_error_text" format="string"/>
+        <attr name="fv_end_text" format="string"/>
+        <attr name="fv_lf_color" format="color"/>
+    </declare-styleable>
+</resources>

@@ -1,11 +1,11 @@
-package com.github.adapterdelegatedemo.adapterDelegate.callback;
+package com.caijia.adapterdelegate.callback;
 
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 import android.text.TextUtils;
 
-import com.github.adapterdelegatedemo.adapterDelegate.ItemViewDelegate;
-import com.github.adapterdelegatedemo.adapterDelegate.ItemViewDelegateManager;
+import com.caijia.adapterdelegate.ItemViewDelegate;
+import com.caijia.adapterdelegate.ItemViewDelegateManager;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.github.adapterdelegatedemo.adapterDelegate.callback;
+package com.caijia.adapterdelegate.callback;
 
 import android.support.annotation.NonNull;
 

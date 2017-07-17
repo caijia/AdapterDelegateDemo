@@ -1,11 +1,11 @@
-package com.github.adapterdelegatedemo.adapterDelegate;
+package com.caijia.adapterdelegate;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
 
-import com.github.adapterdelegatedemo.adapterDelegate.callback.AdapterDelegateDiffCallback;
-import com.github.adapterdelegatedemo.adapterDelegate.delegate.LoadMoreDelegate;
+import com.caijia.adapterdelegate.callback.AdapterDelegateDiffCallback;
+import com.caijia.adapterdelegate.delegate.LoadMoreDelegate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,5 +159,9 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         totalList.add(item);
         addLoadMoreItem();
         notifyDataSetChanged();
+    }
+
+    public void clearItems() {
+        totalList.clear();
     }
 }
