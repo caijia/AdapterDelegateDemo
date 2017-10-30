@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 
 import com.caijia.adapterdelegate.LoadMoreDelegationAdapter;
 import com.caijia.adapterdelegate.delegate.LoadMoreDelegate;
-import com.caijia.adapterdelegate.widget.LoadMoreFooterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
         refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
         refreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new LoadMoreDelegationAdapter(false, null);
+        mAdapter = new LoadMoreDelegationAdapter(true, this);
         mAdapter.delegateManager.addDelegate(new TextViewDelegate());
         mAdapter.delegateManager.addDelegate(new ImageDelegate());
 
@@ -51,10 +50,9 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
      * 加载更多
      *
      * @param recyclerView
-     * @param loadMoreView
      */
     @Override
-    public void onLoadMore(RecyclerView recyclerView, final LoadMoreFooterView loadMoreView) {
+    public void onLoadMore(RecyclerView recyclerView) {
         if (mAdapter == null) {
             return;
         }
@@ -62,23 +60,17 @@ public class MainActivity extends AppCompatActivity implements LoadMoreDelegate.
             @Override
             public void run() {
                 ++page;
-                if (!hasNext()) {
-                    loadMoreView.setStatus(LoadMoreFooterView.Status.THE_END);
-                } else {
-                    loadMoreView.setStatus(LoadMoreFooterView.Status.GONE);
-                }
-                mAdapter.refreshOrLoadMoreDiffItems(page, getItems("loadMore Item " + page + "-", 15));
+                mAdapter.hasNextPage(hasNext());
+                mAdapter.refreshOrLoadMoreItems(page, getItems("loadMore Item " + page + "-", 15));
             }
         }, 2000);
     }
 
     /**
      * 加载更多失败后,点击重试
-     *
-     * @param loadMoreView
      */
     @Override
-    public void onLoadMoreClickRetry(LoadMoreFooterView loadMoreView) {
+    public void onLoadMoreClickRetry() {
 
     }
 

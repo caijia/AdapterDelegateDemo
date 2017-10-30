@@ -61,15 +61,23 @@ public class LoadMoreDelegate
 
         loadMoreView.setStatus(LoadMoreFooterView.Status.LOADING);
         if (onLoadMoreListener != null) {
-            onLoadMoreListener.onLoadMore(recyclerView,loadMoreView);
+            onLoadMoreListener.onLoadMore(recyclerView);
         }
+    }
+
+    public void loadMoreStatus(LoadMoreFooterView.Status status) {
+        if (loadMoreVH == null) {
+            return;
+        }
+        LoadMoreFooterView loadMoreView = loadMoreVH.loadMoreView;
+        loadMoreView.setStatus(status);
     }
 
     @Override
     public void onRetry(LoadMoreFooterView view) {
         if (onLoadMoreListener != null) {
             view.setStatus(LoadMoreFooterView.Status.LOADING);
-            onLoadMoreListener.onLoadMoreClickRetry(view);
+            onLoadMoreListener.onLoadMoreClickRetry();
         }
     }
 
@@ -98,9 +106,9 @@ public class LoadMoreDelegate
 
     public interface OnLoadMoreDelegateListener {
 
-        void onLoadMore(RecyclerView recyclerView, LoadMoreFooterView loadMoreView);
+        void onLoadMore(RecyclerView recyclerView);
 
-        void onLoadMoreClickRetry(LoadMoreFooterView loadMoreView);
+        void onLoadMoreClickRetry();
     }
 
     static class LoadMoreVH extends RecyclerView.ViewHolder {

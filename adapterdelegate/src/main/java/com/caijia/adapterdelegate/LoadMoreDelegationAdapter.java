@@ -6,6 +6,7 @@ import android.support.v7.util.DiffUtil;
 
 import com.caijia.adapterdelegate.callback.AdapterDelegateDiffCallback;
 import com.caijia.adapterdelegate.delegate.LoadMoreDelegate;
+import com.caijia.adapterdelegate.widget.LoadMoreFooterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,9 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
     private LoadMoreDelegate.LoadMoreItem loadMoreItem;
     private AdapterDelegateDiffCallback diffCallback;
     private int minPage = MIN_PAGE;
+    private LoadMoreDelegate loadMoreDelegate;
+    private boolean hasNextPage;
+    private boolean isError;
 
     public LoadMoreDelegationAdapter(boolean loadMore,
                                      @Nullable LoadMoreDelegate.OnLoadMoreDelegateListener l) {
@@ -53,7 +57,8 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         loadMoreItem = new LoadMoreDelegate.LoadMoreItem();
         totalList = new ArrayList<>();
         setDataSource(totalList);
-        delegateManager.addDelegate(new LoadMoreDelegate(l));
+        loadMoreDelegate = new LoadMoreDelegate(l);
+        delegateManager.addDelegate(loadMoreDelegate);
     }
 
     private void addLoadMoreItem() {
@@ -66,7 +71,30 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         this.loadMore = loadMore;
     }
 
-    public void refreshOrLoadMoreItems(int page, @NonNull List<?> items) {
+    public void hasNextPage(boolean hasNextPage) {
+        this.hasNextPage = hasNextPage;
+    }
+
+    public void loadMoreError(boolean isError) {
+        this.isError = isError;
+    }
+
+    private void setLoadMoreStatus(int page, @Nullable List<?> items) {
+        if (isError) {
+            loadMoreDelegate.loadMoreStatus(LoadMoreFooterView.Status.ERROR);
+            return;
+        }
+
+        if (page > minPage && (!hasNextPage || items == null || items.isEmpty())) {
+            loadMoreDelegate.loadMoreStatus(LoadMoreFooterView.Status.THE_END);
+
+        } else {
+            loadMoreDelegate.loadMoreStatus(LoadMoreFooterView.Status.GONE);
+        }
+    }
+
+    public void refreshOrLoadMoreItems(int page, @Nullable List<?> items) {
+        setLoadMoreStatus(page, items);
         if (page < minPage) {
             return;
         }
@@ -79,7 +107,8 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         }
     }
 
-    public void refreshOrLoadMoreDiffItems(int page, @NonNull List<?> items) {
+    public void refreshOrLoadMoreDiffItems(int page, @Nullable List<?> items) {
+        setLoadMoreStatus(page, items);
         if (page < minPage) {
             return;
         }
@@ -92,7 +121,7 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         }
     }
 
-    public void updateDiffItems(@NonNull List<?> items) {
+    public void updateDiffItems(@Nullable List<?> items) {
         if (totalList.isEmpty()) {
             updateItems(items);
 
@@ -115,7 +144,7 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         }
     }
 
-    public void appendDiffItems(@NonNull List<?> items) {
+    private void appendDiffItems(@Nullable List<?> items) {
         if (totalList.isEmpty()) {
             appendItems(items);
 
@@ -140,23 +169,29 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         }
     }
 
-    public void updateItems(@NonNull List<?> items) {
+    public void updateItems(@Nullable List<?> items) {
         totalList.clear();
-        totalList.addAll(items);
+        if (items != null) {
+            totalList.addAll(items);
+        }
         addLoadMoreItem();
         notifyDataSetChanged();
     }
 
-    public void appendItems(@NonNull List<?> items) {
+    private void appendItems(@Nullable List<?> items) {
         totalList.remove(loadMoreItem);
-        totalList.addAll(items);
+        if (items != null) {
+            totalList.addAll(items);
+        }
         addLoadMoreItem();
         notifyDataSetChanged();
     }
 
-    public void appendItem(@NonNull Object item) {
+    private void appendItem(@Nullable Object item) {
         totalList.remove(loadMoreItem);
-        totalList.add(item);
+        if (item != null) {
+            totalList.add(item);
+        }
         addLoadMoreItem();
         notifyDataSetChanged();
     }
