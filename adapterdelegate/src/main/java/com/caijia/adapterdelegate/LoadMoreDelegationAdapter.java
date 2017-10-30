@@ -1,7 +1,9 @@
 package com.caijia.adapterdelegate;
 
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.Px;
 import android.support.v7.util.DiffUtil;
 
 import com.caijia.adapterdelegate.callback.AdapterDelegateDiffCallback;
@@ -198,5 +200,33 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
 
     public void clearItems() {
         totalList.clear();
+    }
+
+    public void setStatusText(CharSequence loadingText, CharSequence emptyText, CharSequence errorText) {
+        loadMoreDelegate.setStatusText(loadingText, emptyText, errorText);
+    }
+
+    public void setStatusTextColor(int textColor) {
+        setStatusTextColor(textColor, textColor, textColor);
+    }
+
+    public void setStatusTextColor(int loadColor, int emptyColor, int errorColor) {
+        loadMoreDelegate.setStatusTextColor(loadColor, emptyColor, errorColor);
+    }
+
+    public void setStatusTextSize(int textSize) {
+        setStatusTextSize(textSize, textSize, textSize);
+    }
+
+    public void setStatusTextSize(int loadTextSize, int emptyTextSize, int errorTextSize) {
+        loadMoreDelegate.setStatusTextSize(loadTextSize, emptyTextSize, errorTextSize);
+    }
+
+    public void setLoadMoreHeight(@Px int height) {
+        loadMoreDelegate.setLoadMoreHeight(height);
+    }
+
+    public void setProgressColor(@ColorInt int color) {
+        loadMoreDelegate.setProgressColor(color);
     }
 }

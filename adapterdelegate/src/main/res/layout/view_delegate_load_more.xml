@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="45dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/loadingView"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="horizontal">
 
         <ProgressBar
+            style="@style/PullProgressBar"
             android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_centerVertical="true"
             android:layout_marginRight="10dp" />
 
         <TextView
@@ -29,7 +30,8 @@
     <TextView
         android:id="@+id/errorView"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:gravity="center"
         android:text="网络错误,点击重试"
         android:textColor="#999999"
@@ -38,9 +40,10 @@
     <TextView
         android:id="@+id/theEndView"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
         android:gravity="center"
-        android:text="暂无更多数据"
+        android:text="——我是有底线的哦——"
         android:textColor="#999999"
         android:textSize="13sp" />
 

@@ -2,11 +2,13 @@ package com.caijia.adapterdelegate.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.caijia.adapterdelegate.R;
@@ -24,6 +26,10 @@ public class LoadMoreFooterView extends FrameLayout {
 
     private TextView mTheEndView;
 
+    private TextView loadingTextTv;
+
+    private ProgressBar progressBar;
+
     private OnRetryListener mOnRetryListener;
 
     public LoadMoreFooterView(Context context) {
@@ -39,9 +45,10 @@ public class LoadMoreFooterView extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.view_delegate_load_more, this, true);
 
         mLoadingView = findViewById(R.id.loadingView);
-        TextView loadingTextTv = (TextView) mLoadingView.findViewById(R.id.text);
-        mErrorView = (TextView) findViewById(R.id.errorView);
-        mTheEndView = (TextView) findViewById(R.id.theEndView);
+        loadingTextTv = mLoadingView.findViewById(R.id.text);
+        mErrorView = findViewById(R.id.errorView);
+        mTheEndView = findViewById(R.id.theEndView);
+        progressBar = findViewById(R.id.progressBar);
 
         TypedArray a = null;
         try {
@@ -49,7 +56,7 @@ public class LoadMoreFooterView extends FrameLayout {
             String loadingText = a.getString(R.styleable.LoadMoreFooterView_fv_loading_text);
             String errorText = a.getString(R.styleable.LoadMoreFooterView_fv_error_text);
             String endText = a.getString(R.styleable.LoadMoreFooterView_fv_end_text);
-            int color = a.getResourceId(R.styleable.LoadMoreFooterView_fv_lf_color,-1);
+            int color = a.getResourceId(R.styleable.LoadMoreFooterView_fv_lf_color, -1);
 
             if (!TextUtils.isEmpty(loadingText)) {
                 loadingTextTv.setText(loadingText);
@@ -85,6 +92,61 @@ public class LoadMoreFooterView extends FrameLayout {
         });
 
         setStatus(Status.GONE);
+        setProgressColor(mTheEndView.getCurrentTextColor());
+    }
+
+    public void setStatusText(CharSequence loadingText, CharSequence emptyText, CharSequence errorText) {
+        setText(loadingTextTv, loadingText);
+        setText(mTheEndView, emptyText);
+        setText(mErrorView, errorText);
+    }
+
+    private void setText(TextView textView, CharSequence text) {
+        if (textView == null || TextUtils.isEmpty(text)) {
+            return;
+        }
+        textView.setText(text);
+    }
+
+    public void setStatusTextColor(int loadColor, int emptyColor, int errorColor) {
+        setTextColor(loadingTextTv, loadColor);
+        setTextColor(mTheEndView, emptyColor);
+        setTextColor(mErrorView, errorColor);
+    }
+
+    private void setStatusTextColor(int color) {
+        setStatusTextColor(color, color, color);
+    }
+
+    private void setTextColor(TextView textView, int color) {
+        if (textView == null || color == 0) {
+            return;
+        }
+        textView.setTextColor(color);
+    }
+
+    public void setStatusTextSize(int loadTextSize, int emptyTextSize, int errorTextSize) {
+        setStatusTextSize(loadingTextTv, loadTextSize);
+        setStatusTextSize(mTheEndView, emptyTextSize);
+        setStatusTextSize(mErrorView, errorTextSize);
+    }
+
+    public void setStatusTextSize(int textSize) {
+        setStatusTextSize(textSize, textSize, textSize);
+    }
+
+    private void setStatusTextSize(TextView textView, int textSize) {
+        if (textView == null || textSize == 0) {
+            return;
+        }
+        textView.setTextSize(textSize);
+    }
+
+    public void setProgressColor(int color){
+        if (color == 0) {
+            return;
+        }
+        progressBar.getIndeterminateDrawable().setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
     }
 
     public void setOnRetryListener(OnRetryListener listener) {
@@ -101,26 +163,6 @@ public class LoadMoreFooterView extends FrameLayout {
         }
         this.mStatus = status;
         change();
-    }
-
-    public static void changeStatus(LoadMoreFooterView view,boolean hasNext, boolean isError) {
-        if (isError) {
-            if (view != null) {
-                view.setStatus(Status.ERROR);
-            }
-            return;
-        }
-
-        if (hasNext) {
-            if (view != null) {
-                view.setStatus(Status.GONE);
-            }
-
-        } else {
-            if (view != null) {
-                view.setStatus(Status.THE_END);
-            }
-        }
     }
 
     public boolean canLoadMore() {

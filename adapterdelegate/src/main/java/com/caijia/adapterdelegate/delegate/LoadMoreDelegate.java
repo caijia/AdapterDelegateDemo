@@ -1,10 +1,13 @@
 package com.caijia.adapterdelegate.delegate;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.Px;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,11 @@ public class LoadMoreDelegate
 
     private LoadMoreVH loadMoreVH;
     private OnLoadMoreDelegateListener onLoadMoreListener;
+    private int loadColor, emptyColor, errorColor;
+    private int loadTextSize, emptyTextSize, errorTextSize;
+    private CharSequence loadingText, emptyText, errorText;
+    private int height;
+    private int progressColor;
 
     public LoadMoreDelegate(@Nullable OnLoadMoreDelegateListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
@@ -34,12 +42,21 @@ public class LoadMoreDelegate
     @Override
     public LoadMoreVH onCreateViewHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.item_delegate_load_more, parent, false);
-        return new LoadMoreVH(view);
+        return new LoadMoreVH(view, height == 0 ? dpToPx(parent.getContext(), 46) : height);
+    }
+
+    private int dpToPx(Context context, float dp) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                context.getResources().getDisplayMetrics()));
     }
 
     @Override
     public void onBindViewHolder(List<?> dataSource, LoadMoreItem loadMoreItem,
                                  RecyclerView.Adapter adapter, LoadMoreVH holder, int position) {
+        holder.loadMoreView.setStatusText(loadingText, emptyText, errorText);
+        holder.loadMoreView.setStatusTextColor(loadColor, emptyColor, errorColor);
+        holder.loadMoreView.setStatusTextSize(loadTextSize, emptyTextSize, errorTextSize);
+        holder.loadMoreView.setProgressColor(progressColor);
     }
 
     @Override
@@ -98,10 +115,44 @@ public class LoadMoreDelegate
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView,int itemType) {
+    public void onAttachedToRecyclerView(RecyclerView recyclerView, int itemType) {
         if (recyclerView != null) {
             LoadMoreHelper.newInstance().attachToRecyclerView(recyclerView, this);
         }
+    }
+
+    public void setStatusText(CharSequence loadingText, CharSequence emptyText, CharSequence errorText) {
+        this.loadingText = loadingText;
+        this.emptyText = emptyText;
+        this.errorText = errorText;
+    }
+
+    public void setProgressColor(int progressColor) {
+        this.progressColor = progressColor;
+    }
+
+    public void setStatusTextColor(int textColor) {
+        setStatusTextColor(textColor, textColor, textColor);
+    }
+
+    public void setStatusTextColor(int loadColor, int emptyColor, int errorColor) {
+        this.loadColor = loadColor;
+        this.emptyColor = emptyColor;
+        this.errorColor = errorColor;
+    }
+
+    public void setStatusTextSize(int textSize) {
+        setStatusTextSize(textSize, textSize, textSize);
+    }
+
+    public void setStatusTextSize(int loadTextSize, int emptyTextSize, int errorTextSize) {
+        this.loadTextSize = loadTextSize;
+        this.emptyTextSize = emptyTextSize;
+        this.errorTextSize = errorTextSize;
+    }
+
+    public void setLoadMoreHeight(@Px int height) {
+        this.height = height;
     }
 
     public interface OnLoadMoreDelegateListener {
@@ -115,13 +166,14 @@ public class LoadMoreDelegate
 
         LoadMoreFooterView loadMoreView;
 
-        LoadMoreVH(View itemView) {
+        LoadMoreVH(View itemView, int height) {
             super(itemView);
-            loadMoreView = (LoadMoreFooterView) itemView.findViewById(R.id.load_more_view);
+            loadMoreView = itemView.findViewById(R.id.load_more_view);
+            itemView.getLayoutParams().height = height;
         }
     }
 
-    public static class LoadMoreItem{
+    public static class LoadMoreItem {
 
     }
 }
