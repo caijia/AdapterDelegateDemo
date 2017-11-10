@@ -132,7 +132,9 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
             oldList.addAll(totalList);
 
             List<Object> newList = new ArrayList<>();
-            newList.addAll(items);
+            if (items != null) {
+                newList.addAll(items);
+            }
             if (loadMore) {
                 newList.add(loadMoreItem);
             }
@@ -157,7 +159,9 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
             List<Object> newList = new ArrayList<>();
             newList.addAll(totalList);
             newList.remove(loadMoreItem);
-            newList.addAll(items);
+            if (items != null) {
+                newList.addAll(items);
+            }
             if (loadMore) {
                 newList.add(loadMoreItem);
             }
@@ -172,28 +176,31 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
     }
 
     public void updateItems(@Nullable List<?> items) {
-        totalList.clear();
-        if (items != null) {
-            totalList.addAll(items);
+        if (items == null) {
+            return;
         }
+        totalList.clear();
+        totalList.addAll(items);
         addLoadMoreItem();
         notifyDataSetChanged();
     }
 
     private void appendItems(@Nullable List<?> items) {
-        totalList.remove(loadMoreItem);
-        if (items != null) {
-            totalList.addAll(items);
+        if (items == null) {
+            return;
         }
+        totalList.remove(loadMoreItem);
+        totalList.addAll(items);
         addLoadMoreItem();
         notifyDataSetChanged();
     }
 
     private void appendItem(@Nullable Object item) {
-        totalList.remove(loadMoreItem);
-        if (item != null) {
-            totalList.add(item);
+        if (item == null) {
+            return;
         }
+        totalList.remove(loadMoreItem);
+        totalList.add(item);
         addLoadMoreItem();
         notifyDataSetChanged();
     }

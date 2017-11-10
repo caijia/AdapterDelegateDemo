@@ -7,7 +7,7 @@ def gitUrl = 'https://github.com/caijia/AdapterDelegateDemo.git'   // Git仓库�
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-version = "1.0.1" //发布版本号
+version = "1.0.4" //发布版本号
 group = "com.caijia"
 
 android {
@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
 
@@ -54,10 +54,10 @@ bintray {
         publish = true // 是否是公开项目，公开别人可以引用
 
         version {
-            name = '1.0'
+            name = '1.0.4'
             desc = 'refresh view'//描述，自己定义
-            released  = new Date()
-            vcsTag = 'v1.0'
+            released = new Date()
+            vcsTag = 'v1.0.4'
             attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
         }
     }
@@ -116,7 +116,7 @@ artifacts {
 }
 
 javadoc {
-    options{
+    options {
         //如果你的项目里面有中文注释的话，必须将格式设置为UTF-8，不然会出现乱码
         encoding "UTF-8"
         charSet 'UTF-8'

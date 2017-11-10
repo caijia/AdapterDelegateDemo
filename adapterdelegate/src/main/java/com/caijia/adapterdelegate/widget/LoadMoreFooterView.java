@@ -172,7 +172,7 @@ public class LoadMoreFooterView extends FrameLayout {
     private void change() {
         switch (mStatus) {
             case GONE:
-                mLoadingView.setVisibility(GONE);
+//                mLoadingView.setVisibility(GONE);
                 mErrorView.setVisibility(GONE);
                 mTheEndView.setVisibility(GONE);
                 break;

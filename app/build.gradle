@@ -26,5 +26,6 @@ dependencies {
     })
     compile 'com.android.support:design:27.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.caijia:refreshlayout:1.0.1'
     compile project(':adapterdelegate')
 }

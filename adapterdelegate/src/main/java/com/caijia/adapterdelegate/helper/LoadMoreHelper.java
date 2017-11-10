@@ -1,6 +1,5 @@
 package com.caijia.adapterdelegate.helper;
 
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.RecyclerView;
 
 /**
@@ -16,7 +15,7 @@ public class LoadMoreHelper {
     private ScrollToBottomListener scrollToBottomListener;
 
     public void attachToRecyclerView(RecyclerView recyclerView, OnLoadMoreListener loadMoreListener) {
-        if (recyclerView == null) {
+        if (recyclerView == null || loadMoreListener == null) {
             return;
         }
 
@@ -41,13 +40,13 @@ public class LoadMoreHelper {
             RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
             int visibleItemCount = layoutManager.getChildCount();
 
-            if (scrolled && visibleItemCount > 0 && newState == RecyclerView.SCROLL_STATE_IDLE) {
+            if (scrolled && visibleItemCount > 0) {
                 scrolled = false;
                 boolean horizontalScroll = layoutManager.canScrollHorizontally();
                 boolean verticalScroll = layoutManager.canScrollVertically();
 
-                if (verticalScroll && !ViewCompat.canScrollVertically(recyclerView, 1)
-                        || horizontalScroll && !ViewCompat.canScrollHorizontally(recyclerView, 1)) {
+                if (verticalScroll && !recyclerView.canScrollVertically(1)
+                        || horizontalScroll && !recyclerView.canScrollHorizontally(1)) {
 
                     if (loadMoreListener != null) {
                         loadMoreListener.onLoadMore(recyclerView);
