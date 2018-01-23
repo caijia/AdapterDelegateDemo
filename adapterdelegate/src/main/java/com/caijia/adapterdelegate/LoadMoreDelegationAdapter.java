@@ -26,7 +26,7 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
     private AdapterDelegateDiffCallback diffCallback;
     private int minPage = MIN_PAGE;
     private LoadMoreDelegate loadMoreDelegate;
-    private boolean hasNextPage;
+    private boolean hasNextPage = true;
     private boolean isError;
 
     public LoadMoreDelegationAdapter(boolean loadMore,
