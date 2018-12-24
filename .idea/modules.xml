@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AdapterDelegateDemo.iml" filepath="$PROJECT_DIR$/.idea/modules/AdapterDelegateDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/AdapterDelegateDemo.iml" filepath="$PROJECT_DIR$/AdapterDelegateDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/adapterdelegate/adapterdelegate.iml" filepath="$PROJECT_DIR$/adapterdelegate/adapterdelegate.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>

@@ -1,17 +1,17 @@
 package com.caijia.adapterdelegate;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.Px;
-import android.support.v7.util.DiffUtil;
-
 import com.caijia.adapterdelegate.callback.AdapterDelegateDiffCallback;
 import com.caijia.adapterdelegate.delegate.LoadMoreDelegate;
 import com.caijia.adapterdelegate.widget.LoadMoreFooterView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.Px;
+import androidx.recyclerview.widget.DiffUtil;
 
 /**
  * Created by cai.jia on 2017/5/15 0015
@@ -195,7 +195,7 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         notifyDataSetChanged();
     }
 
-    private void appendItem(@Nullable Object item) {
+    public void appendItem(@Nullable Object item) {
         if (item == null) {
             return;
         }
@@ -203,6 +203,20 @@ public class LoadMoreDelegationAdapter extends AbsDelegationAdapter {
         totalList.add(item);
         addLoadMoreItem();
         notifyDataSetChanged();
+    }
+
+    public void insertItem(int index, Object item) {
+        totalList.add(index, item);
+        notifyItemInserted(index);
+    }
+
+    public void removeItem(int index) {
+        totalList.remove(index);
+        notifyItemRemoved(index);
+    }
+
+    public List<Object> getTotalList() {
+        return totalList;
     }
 
     public void clearItems() {

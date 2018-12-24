@@ -1,12 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.github.adapterdelegatedemo"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,12 +19,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:design:27.0.0'
-    compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.caijia:refreshlayout:1.0.1'
-    compile project(':adapterdelegate')
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    implementation 'com.caijia:refreshlayout:1.0.1'
+    implementation project(':adapterdelegate')
 }

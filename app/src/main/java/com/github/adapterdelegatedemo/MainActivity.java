@@ -2,9 +2,6 @@ package com.github.adapterdelegatedemo;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.caijia.adapterdelegate.LoadMoreDelegationAdapter;
 import com.caijia.adapterdelegate.delegate.LoadMoreDelegate;
@@ -12,6 +9,10 @@ import com.caijia.refreshlayout.RefreshLayout;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class MainActivity extends AppCompatActivity implements
         LoadMoreDelegate.OnLoadMoreDelegateListener, RefreshLayout.OnRefreshListener {

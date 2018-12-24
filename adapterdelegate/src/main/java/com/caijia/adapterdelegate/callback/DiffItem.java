@@ -1,6 +1,6 @@
 package com.caijia.adapterdelegate.callback;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 /**
  * Created by cai.jia on 2017/5/15 0015

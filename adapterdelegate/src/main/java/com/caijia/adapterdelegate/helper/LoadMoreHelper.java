@@ -1,6 +1,6 @@
 package com.caijia.adapterdelegate.helper;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by cai.jia on 2017/5/12 0012

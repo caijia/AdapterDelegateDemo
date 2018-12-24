@@ -1,13 +1,14 @@
 package com.caijia.adapterdelegate.callback;
 
-import android.support.annotation.Nullable;
-import android.support.v7.util.DiffUtil;
 import android.text.TextUtils;
 
 import com.caijia.adapterdelegate.ItemViewDelegate;
 import com.caijia.adapterdelegate.ItemViewDelegateManager;
 
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
 
 public class AdapterDelegateDiffCallback extends DiffUtil.Callback {
 
